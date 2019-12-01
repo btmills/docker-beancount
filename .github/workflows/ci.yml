@@ -1,0 +1,31 @@
+name: Build and publish Docker image
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  IMAGE_NAME: docker.pkg.github.com/${{ github.repository }}/beancount
+  VERSION: 2.2.3
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v1
+    - name: Build image
+      run: >
+        docker build .
+        --build-arg VERSION
+        --tag "$IMAGE_NAME:$VERSION"
+    - name: Authenticate with GitHub Package Registry
+      run: >
+        docker login docker.pkg.github.com
+        --username $GITHUB_ACTOR
+        --password $GITHUB_TOKEN
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Publish image to GitHub Package Registry
+      run: docker push "$IMAGE_NAME:$VERSION"
