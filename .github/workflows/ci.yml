@@ -3,7 +3,7 @@ name: Build and publish Docker image
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   IMAGE_NAME: docker.pkg.github.com/${{ github.repository }}/beancount
