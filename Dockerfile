@@ -5,11 +5,11 @@ ARG VERSION
 RUN apk add --update \
 		g++ \
 		gcc \
+		git \
 		libxml2-dev \
 		libxslt-dev \
-		mercurial \
 		musl-dev \
-	&& hg clone https://bitbucket.org/blais/beancount --rev "$VERSION" \
+	&& git clone https://github.com/beancount/beancount.git --branch "$VERSION" --depth 1 \
 	&& pip install /beancount
 
 EXPOSE 8080
