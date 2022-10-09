@@ -1,5 +1,6 @@
 FROM python:3.7-alpine
 
+ARG REPOSITORY=https://github.com/beancount/beancount.git
 ARG VERSION
 
 RUN apk add --update \
@@ -9,7 +10,7 @@ RUN apk add --update \
 		libxml2-dev \
 		libxslt-dev \
 		musl-dev \
-	&& git clone https://github.com/beancount/beancount.git --branch "$VERSION" --depth 1 \
+	&& git clone "$REPOSITORY" --branch "$VERSION" --depth 1 \
 	&& pip install /beancount
 
 EXPOSE 8080

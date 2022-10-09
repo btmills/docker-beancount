@@ -7,7 +7,8 @@ on:
 
 env:
   IMAGE_NAME: docker.pkg.github.com/${{ github.repository }}/beancount
-  VERSION: 2.3.5
+  REPOSITORY: https://github.com/btmills/beancount.git
+  VERSION: 2.3.5-average-cost
 
 jobs:
   build:
@@ -18,6 +19,7 @@ jobs:
     - name: Build image
       run: >
         docker build .
+        --build-arg REPOSITORY
         --build-arg VERSION
         --tag "$IMAGE_NAME:$VERSION"
     - name: Authenticate with GitHub Package Registry
